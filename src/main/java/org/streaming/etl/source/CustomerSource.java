@@ -12,12 +12,12 @@ public class CustomerSource {
 
     public Source<Customer, NotUsed> customerSource(){
         Source<Customer, NotUsed> custSource = null;
-        SlickSession session = SlickSessionUtils.getSlickSession();
+        SlickSession session = SlickSessionUtils.getSourceSlickSession();
 
         try{
             custSource = Slick
                     .source(
-                            SlickSessionUtils.getSlickSession(),
+                            SlickSessionUtils.getSourceSlickSession(),
                             "select patient_id, registered_on, dob, patient_name from rcp_patient_head",
                             (SlickRow row) -> new Customer(row.nextString(), row.nextDate(), row.nextDate(), row.nextString())
                     );
