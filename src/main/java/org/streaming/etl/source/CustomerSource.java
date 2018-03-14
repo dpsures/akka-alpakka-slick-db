@@ -12,8 +12,6 @@ public class CustomerSource {
 
     public Source<Customer, NotUsed> customerSource(){
         Source<Customer, NotUsed> custSource = null;
-        SlickSession session = SlickSessionUtils.getSourceSlickSession();
-
         try{
             custSource = Slick
                     .source(
@@ -23,8 +21,6 @@ public class CustomerSource {
                     );
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            session.close();
         }
         return custSource;
     }

@@ -10,6 +10,7 @@ import org.streaming.etl.sink.CustomerSink;
 import org.streaming.etl.source.CustomerSource;
 import org.streaming.etl.vo.Customer;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 public class RunEtl {
@@ -27,13 +28,7 @@ public class RunEtl {
 
         final CompletionStage<Done> done = customerSource.runWith(customerSink, materializer);
 
-        /*final CompletionStage<Done> done = source.customerSource()
-                .log("customer")
-                .runForeach(cust -> System.out.println(cust.getName()), materializer);
-                //.runWith(Sink.ignore(), materializer);*/
-
         done.whenComplete((value, exception) -> {
-            exception.printStackTrace();
             system.terminate();
             System.out.println("etl process done ...");
         });
